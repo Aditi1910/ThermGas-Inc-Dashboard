@@ -1,0 +1,32 @@
+# Large / raw data files - the app pulls data live from the EPA ECHO API instead
+*.csv
+*.zip
+*.xlsx
+*.parquet
+*.feather
+data/
+ECHO_EXPORTER*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Streamlit secrets (never commit)
+.streamlit/secrets.toml
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Local tooling
+.claude/
+
+# Secrets / credentials
+.env
+*.env
+*.pem
+*.key
