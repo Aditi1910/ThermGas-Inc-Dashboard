@@ -11,6 +11,30 @@ from echo_data import NAICS_LABELS, load_facilities
 
 ONE_WEEK = 7 * 24 * 60 * 60  # seconds
 
+# EPA's 10 regions: (regional office, states/territories, short description)
+REGION_INFO: dict[str, tuple[str, str, str]] = {
+    "Region 1": ("Boston, MA", "CT, ME, MA, NH, RI, VT",
+                 "New England; a major biotech and pharma hub around Boston/Cambridge."),
+    "Region 2": ("New York, NY", "NJ, NY, Puerto Rico, U.S. Virgin Islands",
+                 "Dense pharma manufacturing corridor in New Jersey and Puerto Rico."),
+    "Region 3": ("Philadelphia, PA", "DE, DC, MD, PA, VA, WV",
+                 "Mid-Atlantic; home to Northern Virginia's 'Data Center Alley' and Maryland biotech."),
+    "Region 4": ("Atlanta, GA", "AL, FL, GA, KY, MS, NC, SC, TN",
+                 "Southeast; North Carolina's Research Triangle pharma and fast-growing battery plants."),
+    "Region 5": ("Chicago, IL", "IL, IN, MI, MN, OH, WI",
+                 "Great Lakes industrial belt; strong pharma, medical-device and EV battery activity."),
+    "Region 6": ("Dallas, TX", "AR, LA, NM, OK, TX",
+                 "South Central; large Texas semiconductor fabs (Austin, Dallas) and data centers."),
+    "Region 7": ("Lenexa, KS (Kansas City)", "IA, KS, MO, NE",
+                 "Midwest plains; animal-health and biologics manufacturing corridor."),
+    "Region 8": ("Denver, CO", "CO, MT, ND, SD, UT, WY",
+                 "Mountains & Plains; Colorado/Utah tech and semiconductor sites."),
+    "Region 9": ("San Francisco, CA", "AZ, CA, HI, NV, Pacific territories",
+                 "Pacific Southwest; Silicon Valley, Arizona chip fabs, and California biotech."),
+    "Region 10": ("Seattle, WA", "AK, ID, OR, WA",
+                  "Pacific Northwest; Oregon/Idaho semiconductor fabs and large data centers."),
+}
+
 st.set_page_config(page_title="ECHO Facilities Dashboard", page_icon="🏭", layout="wide")
 
 
@@ -32,6 +56,10 @@ st.sidebar.header("Filters")
 
 regions = sorted(data["FacEPARegion"].unique(), key=lambda r: (len(r), r))
 sel_regions = st.sidebar.multiselect("EPA region", regions, placeholder="All regions")
+for region in sel_regions:
+    if region in REGION_INFO:
+        office, states_txt, blurb = REGION_INFO[region]
+        st.sidebar.info(f"**{region} · {office}**  \n{states_txt}  \n_{blurb}_")
 
 state_pool = data if not sel_regions else data[data["FacEPARegion"].isin(sel_regions)]
 states = sorted(state_pool["FacState"].unique())
