@@ -11,6 +11,10 @@ from echo_data import NAICS_LABELS, load_facilities
 
 ONE_WEEK = 7 * 24 * 60 * 60  # seconds
 
+# Palette from the ThermGAS client presentation (also set in .streamlit/config.toml)
+SAGE, BLUE, PLUM, TERRACOTTA = "#5E8C74", "#5276A8", "#7A5C99", "#C0704F"
+SLATE, MUTED = "#2D3142", "#72768A"
+
 # EPA's 10 regions: (regional office, states/territories, short description)
 REGION_INFO: dict[str, tuple[str, str, str]] = {
     "Region 1": ("Boston, MA", "CT, ME, MA, NH, RI, VT",
@@ -59,7 +63,12 @@ sel_regions = st.sidebar.multiselect("EPA region", regions, placeholder="All reg
 for region in sel_regions:
     if region in REGION_INFO:
         office, states_txt, blurb = REGION_INFO[region]
-        st.sidebar.info(f"**{region} · {office}**  \n{states_txt}  \n_{blurb}_")
+        with st.sidebar.container(border=True):
+            st.markdown(
+                f"<span style='color:{SAGE}'><b>{region} · {office}</b></span>  \n{states_txt}  \n"
+                f"<span style='color:{MUTED}'><i>{blurb}</i></span>",
+                unsafe_allow_html=True,
+            )
 
 state_pool = data if not sel_regions else data[data["FacEPARegion"].isin(sel_regions)]
 states = sorted(state_pool["FacState"].unique())
@@ -127,7 +136,7 @@ st.pydeck_chart(
                 "ScatterplotLayer",
                 data=geo[["FacName", "FacCity", "FacState", "Industry", "FacLat", "FacLong"]],
                 get_position="[FacLong, FacLat]",
-                get_fill_color=[37, 99, 235, 170],
+                get_fill_color=[192, 112, 79, 190],  # terracotta from the deck
                 get_radius=4000,
                 radius_min_pixels=2,
                 radius_max_pixels=8,
@@ -145,7 +154,7 @@ st.subheader("Facilities by state")
 by_state = df["FacState"].value_counts().rename_axis("State").reset_index(name="Facilities")
 st.altair_chart(
     alt.Chart(by_state)
-    .mark_bar()
+    .mark_bar(color=SAGE, cornerRadiusEnd=3)
     .encode(
         x=alt.X("State:N", sort="-y", title=None, axis=alt.Axis(labelAngle=0)),
         y=alt.Y("Facilities:Q"),
@@ -161,7 +170,7 @@ if sel_industries:
     by_ind = by_ind[by_ind["Industry"].isin(sel_industries)]
 st.altair_chart(
     alt.Chart(by_ind)
-    .mark_bar()
+    .mark_bar(color=PLUM, cornerRadiusEnd=3)
     .encode(
         x=alt.X("Facilities:Q"),
         y=alt.Y("Industry:N", sort="-x", title=None, axis=alt.Axis(labelLimit=300)),
