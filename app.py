@@ -35,7 +35,7 @@ REGION_INFO: dict[str, tuple[str, str, str]] = {
                   "Pacific Northwest; Oregon/Idaho semiconductor fabs and large data centers."),
 }
 
-st.set_page_config(page_title="ECHO Facilities Dashboard", page_icon="🏭", layout="wide")
+st.set_page_config(page_title="ThermGas Inc. Facilities Dashboard", page_icon="🏭", layout="wide")
 
 
 @st.cache_data(ttl=ONE_WEEK, show_spinner="Pulling the latest facility data from EPA ECHO…")
@@ -91,7 +91,7 @@ if active_only:
     df = df[df["FacActiveFlag"] == "Y"]
 
 # ---------------------------------------------------------------- header + metrics
-st.title("EPA ECHO Facilities Dashboard")
+st.title("ThermGas Inc. Facilities Dashboard")
 st.caption(
     "Facilities regulated by the U.S. EPA in semiconductor, battery, data center, "
     "pharmaceutical, biologics, drug wholesale, and medical lab / imaging industries."

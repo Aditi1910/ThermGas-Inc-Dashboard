@@ -1,4 +1,4 @@
-# EPA ECHO Facilities Dashboard
+# ThermGas Inc. Facilities Dashboard
 
 A Streamlit dashboard of EPA-regulated facilities in ten high-tech and life-science
 industries, built from **EPA ECHO** (Enforcement and Compliance History Online).
