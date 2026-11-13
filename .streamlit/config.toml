@@ -1,17 +1,18 @@
-# Colors and fonts match the ThermGAS client presentation deck
+# Colors and fonts from the ThermGAS client presentation: purple, beige, grey, white
 [theme]
 base = "light"
-primaryColor = "#5E8C74"              # sage green (accent)
-backgroundColor = "#FAF7F2"           # warm off-white slide background
-secondaryBackgroundColor = "#ECE6DD"  # beige card / border tone
-textColor = "#2D3142"                 # dark slate text
+primaryColor = "#7A5C99"              # purple (only accent color)
+backgroundColor = "#FFFFFF"           # white page
+secondaryBackgroundColor = "#ECE6DD"  # beige inputs / cards
+textColor = "#2D3142"                 # dark slate text for readability
 borderColor = "#ECE6DD"
 headingFont = "Cambria, Georgia, 'Times New Roman', serif"
 font = "Calibri, Carlito, 'Segoe UI', Arial, sans-serif"
 
 [theme.sidebar]
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#FAF7F2"
+backgroundColor = "#ECE6DD"           # beige sidebar
+secondaryBackgroundColor = "#FFFFFF"  # white inputs on the beige sidebar
+borderColor = "#D9D1C5"
 
 [server]
 headless = true
